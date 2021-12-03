@@ -1,0 +1,25 @@
+{
+  "name": "inter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "async": "^3.2.2",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "mssql": "^7.3.0",
+    "nodemon": "^2.0.15",
+    "smn-sql": "^1.0.1",
+    "tedious": "^14.0.0",
+    "unirest": "^0.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC"
+}

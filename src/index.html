@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Mega Tempo - Visualizador de Clima</title>
+
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+        <script>
+            firebase.initializeApp({
+                apiKey: "<apiKey>",
+                authDomain: "<authDomain>",
+                databaseURL: "<databaseURL>",
+                projectId: "<projectId>",
+                storageBucket: "<storageBucket>",
+                messagingSenderId: "<messagingSenderId>",
+                appId: "<appId>"
+            });
+        </script>
+
+        <link rel="icon" type="image/x-icon" href="/src/assets/favicon.ico" />
+
+        <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
+
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+        <link href="styles.css" rel="stylesheet"/>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>  
+        <script src="api/API.js"></script>
+        <script src="repository/Tempo.Repository.js"></script>
+        <script src="controller/Tempo.Controller.js"></script>
+        <script src="js/scripts.js"></script>
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="#page-top">Mega Tempo</a></li>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars ms-1"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="#clima">Clima</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#noticias">Notícias</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Contate-nos</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container">
+                <div class="masthead-heading text-uppercase">Bem vindo ao Mega Tempo</div>
+                <div class="masthead-heading text-uppercase">Seu gerenciador de tempo Favortio</div>
+                <a class="btn btn-primary btn-xl text-uppercase" href="#clima">Por onde começar</a>
+            </div>
+        </header>
+        <!-- Clima-->
+        <section class="page-section" id="clima">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">Clima</h2>
+                    <h3 class="section-subheading text-muted">Busque sua região para ver o clima atual</h3>
+                </div>
+                <div class="text-center">
+                    <div class="input-container">
+                        <input id="search-city" class="input" type="text" pattern=".+" required/>
+                        <label class="label" for="search-city">Pesquisa por Cidade</label>
+                        
+                    </div>
+                </div>
+                <!-- Grafico Clima--> 
+                <main id="container-grafico" class="container-grafico">
+                    <div class="text-center card-wrapper">
+                        <h3 id="cidade-buscada" class="section-heading text-uppercase"></h2>
+                    </div>
+                    <div class="card-wrapper">
+                        <section id="container-grafico" class="card anim-flip">
+                            <header>
+                                <h1 id="container-grafico-dia-1" class="card-header"></h1>
+                                <h1 id="container-grafico-data-1" class="card-header"></h1>
+                            </header>
+                            <div class="Temperaturas">
+                                <div class="containerTempMaxMin">
+                                    <h1 id="container-grafico-tempMax-1" class="card-temp box-highlight"></h1>
+                                    <h1 id="container-grafico-tempMin-1" class="card-temp box-highlight"></h1>
+                                </div>
+                            </div>
+                            <p id="container-grafico-descricao-1" class="card-info"></p>
+                        </section>
+                        
+                        <section class="card anim-flip anim-flip-card-2">
+                            <header>
+                                <h1 id="container-grafico-dia-2" class="card-header"></h1>
+                                <h1 id="container-grafico-data-2" class="card-header"></h1>
+                            </header>
+                            <div class="Temperaturas">
+                                <div class="containerTempMaxMin">
+                                    <h1 id="container-grafico-tempMax-2" class="card-temp box-highlight"></h1>
+                                    <h1 id="container-grafico-tempMin-2" class="card-temp box-highlight"></h1>
+                                </div>
+                            </div>
+                            <p id="container-grafico-descricao-2" class="card-info"></p>
+                        </section>
+
+                        <section class="card anim-flip anim-flip-card-3">
+                            <header>
+                                <h1 id="container-grafico-dia-3" class="card-header"></h1>
+                                <h1 id="container-grafico-data-3" class="card-header"></h1>
+                            </header>
+                            <div class="Temperaturas">
+                                <div class="containerTempMaxMin">
+                                    <h1 id="container-grafico-tempMax-3" class="card-temp box-highlight"></h1>
+                                    <h1 id="container-grafico-tempMin-3" class="card-temp box-highlight"></h1>
+                                </div>
+                            </div>
+                            <p id="container-grafico-descricao-3" class="card-info"></p>
+                        </section>
+
+                        <section class="card anim-flip anim-flip-card-4">
+                            <header>
+                                <h1 id="container-grafico-dia-4" class="card-header"></h1>
+                                <h1 id="container-grafico-data-4" class="card-header"></h1>
+                            </header>
+                            <div class="Temperaturas">
+                                <div class="containerTempMaxMin">
+                                    <h1 id="container-grafico-tempMax-4" class="card-temp box-highlight"></h1>
+                                    <h1 id="container-grafico-tempMin-4" class="card-temp box-highlight"></h1>
+                                </div>
+                            </div>
+                            <p id="container-grafico-descricao-4" class="card-info"></p>
+                        </section>
+
+                        <section class="card anim-flip anim-flip-card-5">
+                            <header>
+                                <h1 id="container-grafico-dia-5" class="card-header"></h1>
+                                <h1 id="container-grafico-data-5" class="card-header"></h1>
+                            </header>
+                            <div class="Temperaturas">
+                                <div class="containerTempMaxMin">
+                                    <h1 id="container-grafico-tempMax-5" class="card-temp box-highlight"></h1>
+                                    <h1 id="container-grafico-tempMin-5" class="card-temp box-highlight"></h1>
+                                </div>
+                            </div>
+                            <p id="container-grafico-descricao-5" class="card-info"></p>
+                        </section>
+
+                        <section class="card anim-flip anim-flip-card-6">
+                            <header>
+                                <h1 id="container-grafico-dia-6" class="card-header"></h1>
+                                <h1 id="container-grafico-data-6" class="card-header"></h1>
+                            </header>
+                            <div class="Temperaturas">
+                                <div class="containerTempMaxMin">
+                                    <h1 id="container-grafico-tempMax-6" class="card-temp box-highlight"></h1>
+                                    <h1 id="container-grafico-tempMin-6" class="card-temp box-highlight"></h1>
+                                </div>
+                            </div>
+                            <p id="container-grafico-descricao-6" class="card-info"></p>
+                        </section>
+
+                        <section class="card anim-flip anim-flip-card-7">
+                            <header>
+                                <h1 id="container-grafico-dia-7" class="card-header"></h1>
+                                <h1 id="container-grafico-data-7" class="card-header"></h1>
+                            </header>
+
+                            <div class="Temperaturas">
+                                <div class="containerTempMaxMin">
+                                    <h1 id="container-grafico-tempMax-7" class="card-temp box-highlight"></h1>
+                                    <h1 id="container-grafico-tempMin-7" class="card-temp box-highlight"></h1>
+                                </div>
+                            </div>
+                            <p id="container-grafico-descricao-7" class="card-info"></p>
+                        </section>
+            </div>
+        </section>
+        <!-- Notícias-->
+        <section class="page-section bg-light" id="noticias">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">Notícias</h2>
+                    <h3 class="section-subheading text-muted">Principais noticias sobre o clima</h3>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <!-- Notícias 1-->
+                        <div class="noticias-item">
+                            <a class="noticias-link"  href="https://agroclima.climatempo.com.br/noticia/2021/11/29/semana-de-muita-chuva-nas-areas-produtoras-do-centro-norte-do-br-3089">
+                                <div class="noticias-hover">
+                                    <div class="noticias-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="assets/img/Noticias/noticia1.jpg" alt="..." />
+                            </a>
+                            <div class="noticias-caption">
+                                <div class="noticias-caption-subheading text-muted">Semana de muita chuva nas áreas produtoras do centro-norte do BR</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <!-- Notícias 2-->
+                        <div class="noticias-item">
+                            <a class="noticias-link"  href="https://g1.globo.com/mg/zona-da-mata/noticia/2021/11/29/tempo-chuvoso-ocasionado-por-frente-fria-marca-fim-de-novembro-nas-cidades-da-zona-da-mata-e-vertentes.ghtml">
+                                <div class="noticias-hover">
+                                    <div class="noticias-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="assets/img/Noticias/noticia2.jpg" alt="..." />
+                            </a>
+                            <div class="noticias-caption">
+                                <div class="noticias-caption-subheading text-muted">Tempo chuvoso ocasionado por frente fria marca fim de novembro nas cidades da Zona da Mata e Vertentes</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <!-- Notícias 3-->
+                        <div class="noticias-item">
+                            <a class="noticias-link"  href="https://agroclima.climatempo.com.br/noticia/2021/11/29/geada-provocou-efeito-negativo-na-producao-de-mel-do-pr-3088">
+                                <div class="noticias-hover">
+                                    <div class="noticias-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="assets/img/Noticias/noticia3.jpg" alt="..." />
+                            </a>
+                            <div class="noticias-caption">
+                                <div class="noticias-caption-subheading text-muted">Geada provocou efeito negativo na produção de mel do PR</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
+                        <!-- Notícias 4-->
+                        <div class="noticias-item">
+                            <a class="noticias-link"  href="https://agroclima.climatempo.com.br/noticia/2021/11/26/baixo-volume-de-chuva-ajuda-no-controle-de-doencas-no-rs-3050">
+                                <div class="noticias-hover">
+                                    <div class="noticias-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="assets/img/Noticias/noticia4.jpg" alt="..." />
+                            </a>
+                            <div class="noticias-caption">
+                                <div class="noticias-caption-subheading text-muted">Baixo volume de chuva ajuda no controle de doenças no RS</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 mb-4 mb-sm-0">
+                        <!-- Notícias 5-->
+                        <div class="noticias-item">
+                            <a class="noticias-link" href="https://www.climatempo.com.br/noticia/2021/11/28/frente-fria-avanca-para-o-sudeste-nesta-semana-3080">
+                                <div class="noticias-hover">
+                                    <div class="noticias-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="assets/img/Noticias/noticia5.jpg" alt="..." />
+                            </a>
+                            <div class="noticias-caption">
+                                <div class="noticias-caption-subheading text-muted">Frente fria avança para o Sudeste nesta semana</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <!-- Notícias 6-->
+                        <div class="noticias-item">
+                            <a class="noticias-link" href="#noticiasModal6">
+                                <div class="noticias-hover">
+                                    <div class="noticias-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="assets/img/Noticias/noticia6.jpeg " alt="..." />
+                            </a>
+                            <div class="noticias-caption">
+                                <div class="noticias-caption-subheading text-muted">Chegada de frente fria muda o tempo no Rio no fim de semana</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Contato-->
+        <section class="page-section" id="contact">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">Contate-nos</h2>
+                    <h3 class="section-subheading text-muted">Enviem suas dúvidas e problemas de suas regiões</h3>
+                </div>
+                <form id="contactForm" data-sb-form-api-token="API_TOKEN" onsubmit="return false;">
+                    <div class="row align-items-stretch mb-5">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <!-- Inserir o nome-->
+                                <input class="form-control" id="contato-nome" type="text" placeholder="Digite seu Nome*" data-sb-validations="required" />
+                                <div class="invalid-feedback" data-sb-feedback="name:required">É requerido um nome.</div>
+                            </div>
+                            <div class="form-group">
+                                <!-- Inserir o email-->
+                                <input class="form-control" id="contato-email" type="email" placeholder="Digite seu Email *" data-sb-validations="required,email" />
+                                <div class="invalid-feedback" data-sb-feedback="email:required">É requerido um email.</div>
+                                <div class="invalid-feedback" data-sb-feedback="email:email">Email não é valido</div>
+                            </div>
+                            <div class="form-group mb-md-0">
+                                <!-- Inserir o telefone-->
+                                <input class="form-control" id="contato-telefone" type="tel" placeholder="Digite seu Telefone*" data-sb-validations="required" />
+                                <div class="invalid-feedback" data-sb-feedback="phone:required">É requerido um número de telefone.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-group-textarea mb-md-0">
+                                <!-- Inserir a messagem-->
+                                <textarea class="form-control" id="contato-mensagem" placeholder="Digite uma mensagem *" data-sb-validations="required"></textarea>
+                                <div class="invalid-feedback" data-sb-feedback="message:required">Uma messagem é requerida.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Valida se a Mensagem foi enviada com-->
+                    <div class="d-none" id="submitSuccessMessage">
+                        <div class="text-center text-white mb-3">
+                            <div class="fw-bolder">Sucesso ao enviar mensagem!</div>
+                        </div>
+                    </div>
+                    <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Erro ao enviar mensagem!</div></div>
+                    <!-- Submit Button-->
+                    <div class="text-center">
+                        <button id="enviarContato" onclick="gravaContatos()">Enviar Mensagem</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+       
+        <!--Valida Informações para poder clicar no botão e enviar-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="js/scripts.js"></script>
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
+        <!-- Comanda o site com a Api -->
+        <script>
+            const api = new API();
+            api.getStandardCity();
+        </script>
+    </body>
+</html>
